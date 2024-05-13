@@ -1,0 +1,25 @@
+{
+  "name": "rock-paper-scissors",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@nomicfoundation/hardhat-ignition-ethers": "^0.15.3",
+    "@nomicfoundation/hardhat-toolbox": "^5.0.0",
+    "hardhat": "^2.22.3"
+  },
+  "dependencies": {
+    "@alchemy/aa-alchemy": "^3.13.0",
+    "@alchemy/aa-core": "^3.12.3",
+    "dotenv": "^16.4.5",
+    "ethers": "^6.12.1",
+    "solc": "^0.8.25",
+    "viem": "^2.10.3"
+  }
+}
