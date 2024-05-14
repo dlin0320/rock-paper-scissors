@@ -30,7 +30,7 @@ class Game {
   }
 
   print_details() {
-    console.log(`Game ID: ${this.gameid}\n User Address: ${this.user_address}\n User Pose: ${this.user_pose}\n Computer Pose: ${this.computer_pose}\n Result: ${this.result}`);
+    console.log(`Game ID: ${this.gameid}\nUser Address: ${this.user_address}\nUser Pose: ${this.user_pose}\nComputer Pose: ${this.computer_pose}\nResult: ${this.result}`);
   }
 }
 

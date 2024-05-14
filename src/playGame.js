@@ -7,7 +7,7 @@ require("dotenv").config();
 
 const abi = RockPaperScissors["abi"];
 const contractInterface = new Utils.Interface(abi)
-const contractAddr = "0xFF69980B3fF004dE6BDDad97D2e140Dba5ABD6C9";
+const contractAddr = "0x17d9477578707fE435A957AffF154EBc175feEf6";
 const eventSignature = "0x01de53df2057bbeb7a0f98e9025767c34cee633819f8a361fb431f9d7a95ab8f";
 const userPose = process.argv[2] !== undefined ? parseInt(process.argv[2]) : Math.floor(Math.random() * 3);
 

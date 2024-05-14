@@ -45,7 +45,7 @@ contract RockPaperScissors {
             result = 1;
         }
 
-        emit GameResult(gameid, msg.sender, _user_pose, _computer_pose, result);
+        emit GameResult(gameid, msg.sender, _computer_pose, _user_pose, result);
         gameid++;
     }
 

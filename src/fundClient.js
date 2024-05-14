@@ -15,10 +15,10 @@ const alchemy = new Alchemy({
 
   let txn = {
     to: client.getAddress(),
-    value: Utils.parseEther("0.05"),
+    value: Utils.parseEther("0.1"),
     gasLimit: "100000",
-    maxPriorityFeePerGas: Utils.parseUnits("50", "gwei"),
-    maxFeePerGas: Utils.parseUnits("500", "gwei"),
+    maxPriorityFeePerGas: Utils.parseUnits("30", "gwei"),
+    maxFeePerGas: Utils.parseUnits("300", "gwei"),
     nonce: nonce,
     type: 2,
     chainId: 11155111,
