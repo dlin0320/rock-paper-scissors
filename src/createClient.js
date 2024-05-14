@@ -6,14 +6,25 @@ const signer = LocalAccountSigner.privateKeyToAccountSigner(`0x${process.env.PRI
 
 const createClient = async () => {
   console.log("Creating client...");
-  client = await createModularAccountAlchemyClient({
-    apiKey: process.env.API_KEY,
-    chain: sepolia,
-    signer,
-    gasManagerConfig: {
-      policyId: process.env.POLICY_ID,
-    },
-  });
+  let params;
+  if (process.env.POLICY_ID) {
+    params = {
+      apiKey: process.env.API_KEY,
+      chain: sepolia,
+      signer,
+      gasManagerConfig: {
+        policyId: process.env.POLICY_ID,
+      },
+    };
+  } else {
+    params = {
+      apiKey: process.env.API_KEY,
+      chain: sepolia,
+      signer,
+    };
+  }
+
+  client = await createModularAccountAlchemyClient(params);
   console.log("Client address: ", client.getAddress());
   return client;
 }

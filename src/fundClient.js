@@ -2,12 +2,11 @@ const { Alchemy, Network, Wallet, Utils } = require("alchemy-sdk");
 const { createClient } = require("./createClient");
 require("dotenv").config();
 
-const settings = {
+const wallet = new Wallet(process.env.PRIVATE_KEY);
+const alchemy = new Alchemy({
   apiKey: process.env.API_KEY,
-  network: Network.ETH_SEPOLIA,
-}
-const alchemy = new Alchemy(settings);
-let wallet = new Wallet(process.env.PRIVATE_KEY);
+  network: Network.ETH_SEPOLIA
+});
 
 (async () => {
   const client = await createClient();
@@ -17,7 +16,7 @@ let wallet = new Wallet(process.env.PRIVATE_KEY);
   let txn = {
     to: client.getAddress(),
     value: Utils.parseEther("0.05"),
-    gasLimit: "21000",
+    gasLimit: "100000",
     maxPriorityFeePerGas: Utils.parseUnits("50", "gwei"),
     maxFeePerGas: Utils.parseUnits("500", "gwei"),
     nonce: nonce,

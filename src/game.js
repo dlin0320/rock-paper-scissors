@@ -1,14 +1,14 @@
 class Game {
-  constructor(gameID, player, playerChoice, houseChoice, result) {
-    this.gameID = gameID;
-    this.player = player;
-    this.playerChoice = this.convert(playerChoice);
-    this.houseChoice = this.convert(houseChoice);
-    this.result = this.result(playerChoice, houseChoice);
+  constructor(gameid, user_address, computer_pose, user_pose, result) {
+    this.gameid = gameid;
+    this.user_address = user_address;
+    this.computer_pose = this.convert_pose(computer_pose);
+    this.user_pose = this.convert_pose(user_pose);
+    this.result = this.convert_result(result);
   }
 
-  convert(choice) {
-    switch (choice) {
+  convert_pose(pose) {
+    switch (pose) {
       case 0:
         return "Rock";
       case 1:
@@ -18,22 +18,19 @@ class Game {
     }
   }
   
-  result(playerChoice, houseChoice) {
-    if (playerChoice === houseChoice) {
-      return "Tie";
-    } else if (
-      (playerChoice === 0 && houseChoice === 2) ||
-      (playerChoice === 1 && houseChoice === 0) ||
-      (playerChoice === 2 && houseChoice === 1)
-    ) {
-      return "Player Wins";
-    } else {
-      return "House Wins";
+  convert_result(result) {
+    switch (result) {
+      case 0:
+        return "Win";
+      case 1:
+        return "Lose";
+      case 2:
+        return "Draw";
     }
   }
 
-  print() {
-    console.log(`Game ID: ${this.gameID}, Player: ${this.player}, Player Choice: ${this.playerChoice}, House Choice: ${this.houseChoice}, Result: ${this.result}`);
+  print_details() {
+    console.log(`Game ID: ${this.gameid}\n User Address: ${this.user_address}\n User Pose: ${this.user_pose}\n Computer Pose: ${this.computer_pose}\n Result: ${this.result}`);
   }
 }
 

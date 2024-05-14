@@ -2,37 +2,42 @@
 pragma solidity ^0.8.24;
 
 contract RockPaperScissors {
-    uint256 public gameID;
+    uint256 public gameid;
     address public owner;
     uint256 public constant ENTRY_FEE = 0.05 ether;
 
     event GameResult(
-        uint256 indexed gameID,
-        address indexed player,
-        uint8 playerChoice,
-        uint8 houseChoice,
+        uint256 indexed gameid,
+        address indexed user_address,
+        uint8 computer_pose,
+        uint8 user_pose,
         uint8 result // 0 - win, 1 - lose, 2 - draw
     );
 
     constructor() {
         owner = msg.sender;
-        gameID = 0;
+        gameid = 0;
     }
 
-    function play(uint8 _playerChoice) public payable {
-        require(msg.value == ENTRY_FEE, "Please send 0.05 ether to play");
-        require(_playerChoice >= 0 && _playerChoice <= 2, "Invalid choice");
+    function withdraw() public {
+        require(msg.sender == owner, "Only owner can withdraw");
+        payable(owner).transfer(address(this).balance);
+    }
 
-        uint8 _houseChoice = uint8(random() % 3);
+    function play(uint8 _user_pose) public payable {
+        require(msg.value == ENTRY_FEE, "Please send 0.05 ether to play");
+        require(_user_pose >= 0 && _user_pose <= 2, "Invalid pose");
+
+        uint8 _computer_pose = uint8(random() % 3);
         uint8 result = 0;
 
-        if (_playerChoice == _houseChoice) {
+        if (_user_pose == _computer_pose) {
             result = 2;
             payable(msg.sender).transfer(ENTRY_FEE);
         } else if (
-            (_playerChoice == 0 && _houseChoice == 2) ||
-            (_playerChoice == 1 && _houseChoice == 0) ||
-            (_playerChoice == 2 && _houseChoice == 1)
+            (_user_pose == 0 && _computer_pose == 2) ||
+            (_user_pose == 1 && _computer_pose == 0) ||
+            (_user_pose == 2 && _computer_pose == 1)
         ) {
             result = 0;
             payable(msg.sender).transfer(ENTRY_FEE);
@@ -40,8 +45,8 @@ contract RockPaperScissors {
             result = 1;
         }
 
-        emit GameResult(gameID, msg.sender, _playerChoice, _houseChoice, result);
-        gameID++;
+        emit GameResult(gameid, msg.sender, _user_pose, _computer_pose, result);
+        gameid++;
     }
 
     function random() internal view returns (uint256) {

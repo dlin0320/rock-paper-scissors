@@ -1,20 +1,19 @@
 const { encodeFunctionData } = require("viem");
 const RockPaperScissors = require("../artifacts/contracts/RockPaperScissors.sol/RockPaperScissors.json");
-const { Utils, Contract, Network, Alchemy } = require("alchemy-sdk");
+const { Utils, Network, Alchemy } = require("alchemy-sdk");
 const { createClient } = require("./createClient");
 const Game = require("./game");
 require("dotenv").config();
 
 const abi = RockPaperScissors["abi"];
 const contractInterface = new Utils.Interface(abi)
+const contractAddr = "0xFF69980B3fF004dE6BDDad97D2e140Dba5ABD6C9";
 const eventSignature = "0x01de53df2057bbeb7a0f98e9025767c34cee633819f8a361fb431f9d7a95ab8f";
-const contractAddr = "0x98c9794b2faf5C00bEf41252f1a9b9707b6ECA67";
-const contract = new Contract(contractAddr, abi);
-const playerChoice = Math.floor(Math.random() * 3);
+const userPose = process.argv[2] !== undefined ? parseInt(process.argv[2]) : Math.floor(Math.random() * 3);
+
 const alchemy = new Alchemy({
   apiKey: process.env.API_KEY,
-  network: Network.ETH_SEPOLIA,
-
+  network: Network.ETH_SEPOLIA
 });
 
 (async () => {
@@ -27,7 +26,7 @@ const alchemy = new Alchemy({
     data: encodeFunctionData({
       abi,
       functionName: "play",
-      args: [playerChoice],
+      args: [userPose],
     }),
     value: Utils.parseEther("0.05"),
   };
@@ -47,14 +46,13 @@ const alchemy = new Alchemy({
   for (const log of receipt.logs) {
     if (log.topics[0] === eventSignature) {
       const parsedLog = contractInterface.parseLog(log);
-      const game = new Game(
-        parsedLog.args.gameID,
-        parsedLog.args.player,
-        parsedLog.args.playerChoice,
-        parsedLog.args.houseChoice,
+      new Game(
+        parsedLog.args.gameid,
+        parsedLog.args.user_address,
+        parsedLog.args.computer_pose,
+        parsedLog.args.user_pose,
         parsedLog.args.result
-      );
-      game.print();
+      ).print_details();
     }
   }
 })();
