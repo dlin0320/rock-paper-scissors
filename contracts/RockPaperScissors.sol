@@ -23,7 +23,7 @@ contract RockPaperScissors {
         require(msg.value == ENTRY_FEE, "Please send 0.05 ether to play");
         require(_playerChoice >= 0 && _playerChoice <= 2, "Invalid choice");
 
-        uint8 _houseChoice = uint8(block.timestamp % 3);
+        uint8 _houseChoice = uint8(random() % 3);
         uint8 result = 0;
 
         if (_playerChoice == _houseChoice) {
@@ -43,4 +43,12 @@ contract RockPaperScissors {
         emit GameResult(gameID, msg.sender, _playerChoice, _houseChoice, result);
         gameID++;
     }
+
+    function random() internal view returns (uint256) {
+        return uint256(keccak256(abi.encodePacked(
+        tx.origin,
+        blockhash(block.number - 1),
+        block.timestamp
+    )));
+  }
 }

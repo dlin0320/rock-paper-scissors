@@ -27,7 +27,6 @@ describe("RockPaperScissors", function () {
 	it("should emit a GameResult event when a game is played", async () => {
 		const playerChoice = Math.floor(Math.random() * 3);
 		const tx = await contract.connect(player).play(playerChoice, { value: ENTRY_FEE });
-
 		let houseChoice;
 		await expect(tx)
 			.to.emit(contract, 'GameResult')
